@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="The Classic Cut - Modern Barber Shop Offering Sharp Looks and Smooth Cuts. Book Appointments Online, View Services, and Explore Our Gallery.">
+  <meta name="keywords" content="barber shop, haircut, beard trim, male grooming, The Classic Cut">
+  <title>The Classic Cut - Barber Shop</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+    /* Custom Styles for Animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .typewriter {
+      overflow: hidden;
+      border-right: 2px solid #ff6b6b;
+      white-space: nowrap;
+      animation: typewriter 3s steps(30, end) 1s both, blink-caret 0.75s step-end infinite;
+    }
+    @keyframes typewriter {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    @keyframes blink-caret {
+      from, to { border-color: transparent; }
+      50% { border-color: #ff6b6b; }
+    }
+    .hero-bg {
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/662f4c4e-9298-4308-90c2-e521308fb323.png') no-repeat center center fixed;
+      background-size: cover;
+    }
+    .service-card:hover {
+      transform: translateY(-5px);
+      transition: transform 0.3s ease;
+    }
+    .gallery-item img {
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      cursor: pointer;
+    }
+    .gallery-item img:hover {
+      transform: scale(1.05);
+      opacity: 0.8;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.9);
+      align-items: center;
+      justify-content: center;
+    }
+    .modal img {
+      max-width: 90%;
+      max-height: 90%;
+    }
+    .dark-mode {
+      background-color: #121212;
+      color: #ffffff;
+    }
+    .dark-mode .bg-light {
+      background-color: #1e1e1e;
+    }
+    .dark-mode .text-dark {
+      color: #ffffff;
+    }
+    .dark-mode .border {
+      border-color: #333;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+  <!-- Navigation Bar -->
+  <nav class="bg-gray-900 text-white shadow-lg fixed top-0 w-full z-50">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <a href="#home" class="text-2xl font-bold text-pink-500">The Classic Cut</a>
+      <button class="md:hidden" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i>
+      </button>
+      <ul class="hidden md:flex md:space-x-6">
+        <li><a href="#home" class="hover:text-pink-400 transition">Home</a></li>
+        <li><a href="#about" class="hover:text-pink-400 transition">About</a></li>
+        <li><a href="#services" class="hover:text-pink-400 transition">Services</a></li>
+        <li><a href="#gallery" class="hover:text-pink-400 transition">Gallery</a></li>
+        <li><a href="#booking" class="hover:text-pink-400 transition">Booking</a></li>
+        <li><a href="#reviews" class="hover:text-pink-400 transition">Reviews</a></li>
+        <li><a href="#contact" class="hover:text-pink-400 transition">Contact</a></li>
+      </ul>
+      <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-800 transition" title="Toggle Dark Mode">
+        <i class="fas fa-moon"></i>
+      </button>
+    </div>
+    <ul id="mobile-menu" class="hidden md:hidden bg-gray-900 px-4 py-2 space-y-2">
+      <li><a href="#home" class="block hover:text-pink-400 transition" onclick="toggleMenu()">Home</a></li>
+      <li><a href="#about" class="block hover:text-pink-400 transition" onclick="toggleMenu()">About</a></li>
+      <li><a href="#services" class="block hover:text-pink-400 transition" onclick="toggleMenu()">Services</a></li>
+      <li><a href="#gallery" class="block hover:text-pink-400 transition" onclick="toggleMenu()">Gallery</a></li>
+      <li><a href="#booking" class="block hover:text-pink-400 transition" onclick="toggleMenu()">Booking</a></li>
+      <li><a href="#reviews" class="block hover:text-pink-400 transition" onclick="toggleMenu()">Reviews</a></li>
+      <li><a href="#contact" class="block hover:text-pink-400 transition" onclick="toggleMenu()">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <header id="home" class="hero-bg min-h-screen flex items-center justify-center text-center text-white">
+    <div class="container mx-auto px-4 fade-in">
+      <h1 class="text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-pink-400 to-red-400 bg-clip-text text-transparent">The Classic Cut</h1>
+      <p class="text-xl md:text-3xl typewriter mb-8">Sharp Looks. Smooth Cuts.</p>
+      <a href="#booking" class="bg-pink-600 hover:bg-pink-700 px-8 py-4 rounded-full text-lg font-semibold transition shadow-lg inline-block animate-pulse">Book Appointment</a>
+    </div>
+  </header>
+
+  <!-- About Us -->
+  <section id="about" class="py-20 bg-gray-100 dark:bg-gray-700">
+    <div class="container mx-auto px-4 text-center fade-in">
+      <h2 class="text-4xl font-bold mb-8 text-pink-600">About Us</h2>
+      <div class="md:flex md:space-x-8">
+        <div class="md:w-1/2 mb-8">
+          <p class="text-lg mb-4">Since 1995, The Classic Cut has been the premier barber shop for timeless style and impeccable grooming. We blend traditional craftsmanship with modern techniques to deliver unparalleled results.</p>
+          <p>Our passionate team of skilled barbers is committed to making every client feel valued and look their best. Join our community of satisfied customers and experience the art of barbering.</p>
+        </div>
+        <div class="md:w-1/2">
+          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/f5e7dd86-4799-4543-8eaf-19bf04b7ec4f.png" alt="Professional barber team performing a modern haircut session with scissors and clippers in a well-lit barber shop setting, showcasing expertise and style" class="rounded-lg shadow-2xl mx-auto w-full" />
+        </div>
+      </div>
+      <div class="mt-8">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Barber Shop Tour" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="mx-auto max-w-full rounded-lg shadow-lg"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="py-20">
+    <div class="container mx-auto px-4 fade-in">
+      <h2 class="text-4xl font-bold text-center mb-12 text-pink-600">Our Services</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="service-card bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition">
+          <i class="fas fa-cut text-pink-500 text-3xl mb-4"></i>
+          <h3 class="text-xl font-semibold mb-2">Haircut</h3>
+          <p class="mb-4">Precision cuts tailored to your style. Duration: 30-60 min</p>
+          <p class="text-pink-600 font-bold text-lg">$25</p>
+        </div>
+        <div class="service-card bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition">
+          <i class="fas fa-razor text-pink-500 text-3xl mb-4"></i>
+          <h3 class="text-xl font-semibold mb-2">Beard Trim</h3>
+          <p class="mb-4">Expert beard shaping and cleanup. Duration: 15-30 min</p>
+          <p class="text-pink-600 font-bold text-lg">$15</p>
+        </div>
+        <div class="service-card bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition">
+          <i class="fas fa-hand-holding-heart text-pink-500 text-3xl mb-4"></i>
+          <h3 class="text-xl font-semibold mb-2">Hot Towel Shave</h3>
+          <p class="mb-4">Relaxing hot towel shave for smooth skin. Duration: 20-40 min</p>
+          <p class="text-pink-600 font-bold text-lg">$20</p>
+        </div>
+        <div class="service-card bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition">
+          <i class="fas fa-child text-pink-500 text-3xl mb-4"></i>
+          <h3 class="text-xl font-semibold mb-2">Kids Cut</h3>
+          <p class="mb-4">Fun and quick cuts for the little ones. Duration: 15-30 min</p>
+          <p class="text-pink-600 font-bold text-lg">$18</p>
+        </div>
+        <div class="service-card bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition">
+          <i class="fas fa-spray-can text-pink-500 text-3xl mb-4"></i>
+          <h3 class="text-xl font-semibold mb-2">Styling</h3>
+          <p class="mb-4">Hair styling with premium products. Duration: 10-20 min</p>
+          <p class="text-pink-600 font-bold text-lg">$15</p>
+        </div>
+        <div class="service-card bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition">
+          <i class="fas fa-plus-circle text-pink-500 text-3xl mb-4"></i>
+          <h3 class="text-xl font-semibold mb-2">Combo Packages</h3>
+          <p class="mb-4">Bundle services for the best value. Duration: Varies</p>
+          <p class="text-pink-600 font-bold text-lg">$45+</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section id="gallery" class="py-20 bg-gray-100 dark:bg-gray-700">
+    <div class="container mx-auto px-4 fade-in">
+      <h2 class="text-4xl font-bold text-center mb-12 text-pink-600">Our Gallery</h2>
+      <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div class="gallery-item">
+          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/a4f3f13f-edc2-4d67-a78b-23e9e4ce4c70.png" alt="Close-up view of a sharp modern low fade haircut with meticulously trimmed neat beard, styled with trendy attire in a glamorous studio light setting showcasing urban fashion and precision grooming techniques" onclick="openModal(this)" class="rounded-lg shadow-lg w-full h-32 object-cover" />
+        </div>
+        <div class="gallery-item">
+          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/36c1a075-e930-47c4-9a8a-c0b53dd16125.png" alt="Elegant vintage barber chair accompanied by traditional retro tools like straight razors and combs, surrounded by ornate antique mirrors in a warm-toned cozy interior atmosphere evoking classic barber shop nostalgia" onclick="openModal(this)" class="rounded-lg shadow-lg w-full h-32 object-cover" />
+        </div>
+        <div class="gallery-item">
+          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e7a02b8a-e075-42e6-bb6a-4fcb856bbf85.png" alt="Diverse group of professional male barbers standing confidently in sleek modern uniforms, holding premium grooming products, representing skilled craftsmanship and friendly service in a contemporary setting" onclick="openModal(this)" class="rounded-lg shadow-lg w-full h-32 object-cover" />
+        </div>
+        <div class="gallery-item">
+          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/484e0f19-ff51-4d29-a7e5-a096c4777185.png" alt="Happy satisfied customer gazing into a hand-held mirror to admire his fashionable fresh haircut and perfectly groomed appearance, radiating confidence and satisfaction after a professional barber session" onclick="openModal(this)" class="rounded-lg shadow-lg w-full h-32 object-cover" />
+        </div>
+        <div class="gallery-item">
+          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/68f1ee87-7612-4667-93c9-00e0da77c36a.png" alt="Artistic close-up of intricate facial hair sculpture featuring creative beard designs meticulously crafted with precision scissors and clippers, highlighting the artistry and detail in modern barbering techniques" onclick="openModal(this)" class="rounded-lg shadow-lg w-full h-32 object-cover" />
+        </div>
+        <div class="gallery-item">
+          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/a7de7515-7e9d-47f9-bf11-884afe7ed750.png" alt="Luxurious setup for a relaxing hot towel shave featuring elegant aromatic oils, soft warm towels unfolded neatly, steam rising, creating a soothing and indulgent grooming ritual ambiance" onclick="openModal(this)" class="rounded-lg shadow-lg w-full h-32 object-cover" />
+        </div>
+        <div class="gallery-item">
+          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/99bef3c3-1402-4bb4-aefe-cfb5be8ad773.png" alt="Adorable scene of a youthful kid's friendly haircut environment with colorful toys scattered around, comfortable padded child's chair, and cheerful atmosphere making grooming fun for young clients" onclick="openModal(this)" class="rounded-lg shadow-lg w-full h-32 object-cover" />
+        </div>
+        <div class="gallery-item">
+          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/748cf574-3e72-4d81-a50f-29cfb90647f1.png" alt="Abstract artistic composition of essential barber tools including sharp scissors, wide-tooth comb, and sleek razor arranged in striking geometric patterns, representing precision and creativity in hairstyling professions" onclick="openModal(this)" class="rounded-lg shadow-lg w-full h-32 object-cover" />
+        </div>
+      </div>
+      <!-- Modal for Lightbox -->
+      <div id="modal" class="modal" onclick="closeModal()">
+        <img id="modal-img" src="" alt="">
+        <button class="absolute top-4 right-4 text-white text-2xl bg-black bg-opacity-50 rounded-full w-10 h-10 flex items-center justify-center" onclick="closeModal()">×</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking -->
+  <section id="booking" class="py-20">
+    <div class="container mx-auto px-4 fade-in">
+      <h2 class="text-4xl font-bold text-center mb-12 text-pink-600">Book Your Appointment</h2>
+      <form id="booking-form" class="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg">
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2" for="full-name">Full Name *</label>
+          <input type="text" id="full-name" name="fullName" class="w-full border border-gray-300 rounded px-4 py-2" required />
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2" for="email">Email *</label>
+          <input type="email" id="email" name="email" class="w-full border border-gray-300 rounded px-4 py-2" required />
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2" for="phone">Phone *</label>
+          <input type="tel" id="phone" name="phone" class="w-full border border-gray-300 rounded px-4 py-2" required />
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2" for="service">Service *</label>
+          <select id="service" name="service" class="w-full border border-gray-300 rounded px-4 py-2" required>
+            <option value="">Choose a service</option>
+            <option value="Haircut">Haircut</option>
+            <option value="Beard Trim">Beard Trim</option>
+            <option value="Hot Towel Shave">Hot Towel Shave</option>
+            <option value="Kids Cut">Kids Cut</option>
+            <option value="Styling">Styling</option>
+            <option value="Combo">Combo Package</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2" for="date">Date *</label>
+          <input type="date" id="date" name="date" class="w-full border border-gray-300 rounded px-4 py-2" required />
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2" for="time">Time *</label>
+          <input type="time" id="time" name="time" class="w-full border border-gray-300 rounded px-4 py-2" required />
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2" for="barber">Preferred Barber</label>
+          <input type="text" id="barber" name="barber" class="w-full border border-gray-300 rounded px-4 py-2" placeholder="Optional" />
+        </div>
+        <button type="submit" class="w-full bg-pink-600 text-white py-3 rounded hover:bg-pink-700 transition">Book Now</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Reviews -->
+  <section id="reviews" class="py-20 bg-gray-100 dark:bg-gray-700">
+    <div class="container mx-auto px-4 fade-in">
+      <h2 class="text-4xl font-bold text-center mb-12 text-pink-600">Customer Reviews</h2>
+      <div id="reviews-list" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        <!-- Static Reviews -->
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+          <div class="flex mb-2">
+            <i class="fas fa-star text-yellow-400"></i>
+            <i class="fas fa-star text-yellow-400"></i>
+            <i class="fas fa-star text-yellow-400"></i>
+            <i class="fas fa-star text-yellow-400"></i>
+            <i class="fas fa-star text-yellow-400"></i>
+          </div>
+          <p class="text-gray-600 mb-4">"Best haircut I've ever had! The staff is professional and friendly. Highly recommend!"</p>
+          <p class="font-semibold">- John Doe</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+          <div class="flex mb-2">
+            <i class="fas fa-star text-yellow-400"></i>
+            <i class="fas fa-star text-yellow-400"></i>
+            <i class="fas fa-star text-yellow-400"></i>
+            <i class="fas fa-star text-yellow-400"></i>
+            <i class="fas fa-star-half-alt text-yellow-400"></i>
+          </div>
+          <p class="text-gray-600 mb-4">"Great shave experience. Clean shop and excellent service."</p>
+          <p class="font-semibold">- Jane Smith</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+          <div class="flex mb-2">
+            <i class="fas fa-star text-yellow-400"></i>
+            <i class="fas fa-star text-yellow-400"></i>
+            <i class="fas fa-star text-yellow-400"></i>
+            <i class="fas fa-star text-yellow-400"></i>
+            <i class="fas fa-star text-yellow-400"></i>
+          </div>
+          <p class="text-gray-600 mb-4">"Love the atmosphere! My kids enjoy coming here too."</p>
+          <p class="font-semibold">- Alex Johnson</p>
+        </div>
+      </div>
+      <form id="review-form" class="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg">
+        <h3 class="text-2xl font-bold mb-4">Leave a Review</h3>
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2" for="review-name">Name *</label>
+          <input type="text" id="review-name" name="name" class="w-full border border-gray-300 rounded px-4 py-2" required />
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2" for="rating">Rating *</label>
+          <select id="rating" name="rating" class="w-full border border-gray-300 rounded px-4 py-2" required>
+            <option value="5">5 Stars</option>
+            <option value="4">4 Stars</option>
+            <option value="3">3 Stars</option>
+            <option value="2">2 Stars</option>
+            <option value="1">1 Star</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2" for="comment">Comment</label>
+          <textarea id="comment" name="comment" rows="3" class="w-full border border-gray-300 rounded px-4 py-2"></textarea>
+        </div>
+        <button type="submit" class="w-full bg-pink-600 text-white py-3 rounded hover:bg-pink-700 transition">Submit Review</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="py-20">
+    <div class="container mx-auto px-4 fade-in">
+      <h2 class="text-4xl font-bold text-center mb-12 text-pink-600">Contact Us</h2>
+      <div class="md:flex md:space-x-8">
+        <div class="md:w-1/2 mb-8">
+          <form id="contact-form" class="bg-white p-8 rounded-lg shadow-lg">
+            <div class="mb-4">
+              <label class="block text-gray-700 mb-2" for="contact-name">Name *</label>
+              <input type="text" id="contact-name" name="name" class="w-full border border-gray-300 rounded px-4 py-2" required />
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700 mb-2" for="contact-email">Email *</label>
+              <input type="email" id="contact-email" name="email" class="w-full border border-gray-300 rounded px-4 py-2" required />
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700 mb-2" for="contact-message">Message</label>
+              <textarea id="contact-message" name="message" rows="4" class="w-full border border-gray-300 rounded px-4 py-2"></textarea>
+            </div>
+            <button type="submit" class="w-full bg-pink-600 text-white py-3 rounded hover:bg-pink-700 transition">Send Message</button>
+          </form>
+        </div>
+        <div class="md:w-1/2">
+          <div class="mb-4">
+            <h3 class="text-xl font-semibold mb-2">Business Hours</h3>
+            <p>Monday - Friday: 9 AM - 7 PM</p>
+            <p>Saturday: 9 AM - 6 PM</p>
+            <p>Sunday: Closed</p>
+          </div>
+          <div class="mb-4">
+            <p><i class="fas fa-phone text-pink-500"></i> (555) 123-4567</p>
+            <p><i class="fas fa-envelope text-pink-500"></i> contact@theclassicut.com</p>
+          </div>
+          <div class="mb-4">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.835434509053!2d-122.41998778468197!3d37.77494758028055!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085807dbda90a29%3A0x2b6ed8d0e5dfaf!2sFake%20Barber%20Shop%20Location!5e0!3m2!1sen!2sus!4v1630491635400!5m2!1sen!2sus" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" class="rounded-lg shadow-lg"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-8">
+    <div class="container mx-auto px-4 text-center">
+      <p>© 2023 The Classic Cut. All rights reserved.</p>
+      <div class="flex justify-center space-x-4 mt-4">
+        <a href="#" class="hover:text-pink-400"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="hover:text-pink-400"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="hover:text-pink-400"><i class="fab fa-twitter"></i></a>
+        <a href="https://wa.me/15551234567" class="hover:text-pink-400"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript for Interactions -->
+  <script>
+    // Dark Mode Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      const icon = themeToggle.querySelector('i');
+      icon.classList.toggle('fa-moon');
+      icon.classList.toggle('fa-sun');
+    });
+
+    // Mobile Menu Toggle
+    function toggleMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    }
+
+    // Fade-in on Scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Gallery Lightbox
+    function openModal(img) {
+      const modal = document.getElementById('modal');
+      const modalImg = document.getElementById('modal-img');
+      modal.style.display = 'flex';
+      modalImg.src = img.src;
+      modalImg.alt = img.alt;
+    }
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+    }
+
+    // Booking Form Submit (Simulate)
+    document.getElementById('booking-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Thank you! Your appointment has been booked. We will send a confirmation email shortly.');
+      e.target.reset();
+    });
+
+    // Review Form Submit (Simulate and Add)
+    document.getElementById('review-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const review = {
+        name: formData.get('name'),
+        rating: parseInt(formData.get('rating')),
+        comment: formData.get('comment') || 'Great service!'
+      };
+      // Simulate approval and add to localStorage
+      const reviews = JSON.parse(localStorage.getItem('reviews') || '[]');
+      reviews.push(review);
+      localStorage.setItem('reviews', JSON.stringify(reviews));
+      displayReviews();
+      alert('Thank you for your review! It will be posted after approval.');
+      e.target.reset();
+    });
+
+    // Display Reviews from localStorage
+    function displayReviews() {
+      const reviews = JSON.parse(localStorage.getItem('reviews') || '[]');
+      const list = document.getElementById('reviews-list');
+      const staticCount = list.children.length;
+      reviews.forEach((review, index) => {
+        const div = document.createElement('div');
+        div.className = 'bg-white p-6 rounded-lg shadow-lg';
+        div.innerHTML = `
+          <div class="flex mb-2">
+            ${Array(review.rating).fill('<i class="fas fa-star text-yellow-400"></i>').join('')}
+          </div>
+          <p class="text-gray-600 mb-4">"${review.comment}"</p>
+          <p class="font-semibold">- ${review.name}</p>
+        `;
+        list.insertBefore(div, list.children[staticCount + index]);
+      });
+    }
+    displayReviews();
+
+    // Contact Form Submit (Simulate)
+    document.getElementById('contact-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Thank you! We will get back to you soon.');
+      e.target.reset();
+    });
+
+    // Smooth Scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+</body>
+</html>
+</content>
+</create_file>
